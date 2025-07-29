@@ -1,6 +1,6 @@
 // En tu componente Vue (e.g., Contacto.vue)
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue' // Añade onBeforeUnmount
+import { ref, onMounted, onBeforeUnmount, nextTick} from 'vue' // Añade onBeforeUnmount
 import axios from 'axios'
 
 const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY
@@ -35,21 +35,14 @@ const renderRecaptcha = () => {
   }
 };
 
-onMounted(() => {
-  // Asigna la función de renderizado al onloadCallback global.
-  // Si el script de reCAPTCHA ya se cargó, y no encontró un onloadCallback definido,
-  // la cargará y la ejecutará inmediatamente.
-  // Si ya existía un onloadCallback (por otro componente), podríamos sobrescribirlo.
-  // Para un solo componente con reCAPTCHA, esto suele funcionar bien.
-  (window as any).onloadCallback = renderRecaptcha;
+onMounted(async () => {
+  (window as any).onloadCallback = renderRecaptcha
 
-  // Un respaldo: si el script ya cargó antes de que este componente se montara
-  // y definiera onloadCallback (lo cual es raro con async defer pero posible),
-  // podemos intentar renderizarlo directamente.
+  await nextTick() // Espera que se monte el template
   if ((window as any).grecaptcha && (window as any).grecaptcha.render && captchaWidgetId.value === null) {
-      renderRecaptcha();
+    renderRecaptcha()
   }
-});
+})
 
 onBeforeUnmount(() => {
   // Limpia el onloadCallback global si este componente es el único que lo define

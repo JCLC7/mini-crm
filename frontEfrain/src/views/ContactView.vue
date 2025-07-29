@@ -110,7 +110,7 @@ const enviarFormulario = async () => {
       <div class="absolute inset-0 -z-10 transform rotate-6 bg-blue-500 rounded-2xl"></div>
 
       <h2 class="text-xl font-semibold text-gray-800">
-        <span class="text-blue-600 font-bold">¿Necesitas ayuda?</span> Por favor completa el
+        <span class="text-blue-600 font-bold">¿Necesitas ayudaaaaaaaaaaaaaa?</span> Por favor completa el
         formulario.
       </h2>
 

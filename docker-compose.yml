@@ -56,7 +56,20 @@ services:
       - efrain_network
     depends_on:
       - api 
-
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    ports:
+      - "80:80"       # HTTP
+      - "81:81"       # Panel de administración
+      - "443:443"     # HTTPS
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+    volumes:
+      - ./data/nginx/data:/data
+      - ./data/nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - efrain_network
 
 volumes:
   db_data:
@@ -65,3 +78,4 @@ volumes:
 networks:
   efrain_network:
     driver: bridge  
+

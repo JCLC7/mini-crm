@@ -74,7 +74,7 @@ const enviarFormulario = async () => {
   }
 
   try {
-    const respuesta = await axios.post('http://localhost:4000/api/contacto', {
+    const respuesta = await axios.post('https://api.jclc.xyz/api/contacto', {
       nombreCompleto: nombreCompleto.value,
       correo: correo.value,
       telefono: telefono.value,
